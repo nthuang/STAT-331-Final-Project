@@ -16,6 +16,7 @@ execute:
 
 ```{r}
 library(tidyverse)
+library(dplyr)
 ```
 
 ```{r}
@@ -66,3 +67,10 @@ lex_long |>
   mutate(year = str_remove(year, pattern = "X"))
 
 ```
+
+```{r}
+data <- gdp_cap_long |> 
+  full_join(lex_long, by = c("country", "year"))
+data
+```
+
