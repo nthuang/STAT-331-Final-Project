@@ -58,3 +58,11 @@ lex_long <- lex |>
   select(country, year, life_ex)
 ```
 
+```{r}
+gdp_cap_long |>
+  mutate(year = str_remove(year, pattern = "X"))
+
+lex_long |> 
+  mutate(year = str_remove(year, pattern = "X"))
+
+```
