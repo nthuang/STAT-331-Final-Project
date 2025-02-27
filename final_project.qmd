@@ -51,5 +51,10 @@ gdp_cap_long <- gdp_clean |>
                values_to = "gdp_capita") |>
   select(country, year, gdp_capita)
 
+lex_long <- lex |>
+  pivot_longer(cols = "X1800":"X2020",
+               names_to = "year",
+               values_to = "life_ex") |>
+  select(country, year, life_ex)
 ```
 
