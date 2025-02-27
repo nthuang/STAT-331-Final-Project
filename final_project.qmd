@@ -60,10 +60,10 @@ lex_long <- lex |>
 ```
 
 ```{r}
-gdp_cap_long |>
+gdp_cap_long <- gdp_cap_long |>
   mutate(year = str_remove(year, pattern = "X"))
 
-lex_long |> 
+lex_long <- lex_long |> 
   mutate(year = str_remove(year, pattern = "X"))
 
 ```
