@@ -10,6 +10,8 @@ editor: source
 execute: 
   error: true
   echo: true
+warning: false
+message: false
 ---
 
 ## Data
@@ -23,6 +25,7 @@ library(dplyr)
 gdp_cap = read.csv("./gdp_pcap.csv")
 lex = read.csv("./lex.csv")
 ```
+The GDP data set represents the countries overall Gross Domestic Product, in Internation Dollars, divided by the country's population. The life expectancy data set represents the expected years a baby born in that year and country, would live. 
 
 ## Data Cleaning
 
