@@ -23,3 +23,33 @@ gdp_cap = read.csv("./gdp_pcap.csv")
 lex = read.csv("./lex.csv")
 ```
 
+```{r}
+conv_to_int <- function(x){
+  if_else(
+    str_detect(x, "k"),
+    as.double(str_remove(x, pattern = "k"))*1000,
+    as.double(x)
+  )
+}
+  
+x <- c("10.2k", "11.3k", 1000)
+conv_to_int(x)
+```
+
+```{r}
+gdp_clean <- gdp_cap |>
+  mutate(across(.cols = "X1800":"X2099",
+                .f = conv_to_int)
+  )
+  
+```
+
+```{r}
+gdp_cap_long <- gdp_clean |>
+  pivot_longer(cols = "X1800":"X2020",
+               names_to = "year",
+               values_to = "gdp_capita") |>
+  select(country, year, gdp_capita)
+
+```
+
