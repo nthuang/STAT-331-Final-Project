@@ -69,10 +69,10 @@ Here, we pivoted both data sets into a long format, so that each row represents 
 ### Remove X's
 ```{r}
 gdp_cap_long <- gdp_cap_long |>
-  mutate(year = str_remove(year, pattern = "X"))
+  mutate(year = as.integer(str_remove(year, pattern = "X")))
 
 lex_long <- lex_long |> 
-  mutate(year = str_remove(year, pattern = "X"))
+  mutate(year = as.integer(str_remove(year, pattern = "X")))
 
 ```
 
