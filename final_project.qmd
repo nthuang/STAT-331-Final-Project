@@ -89,3 +89,15 @@ data
 ```
 
 Here we joined the data together into one frame with a column for year, country, GDP per capita, and life expectancy. Based on brief analysis of the data, we hypothesize that as GDP per capita increase, the life expectancy will also increase.
+
+### Combining Data and Modelling
+```{r}
+graph_data <- data |>
+  group_by(year) |>
+  summarize(mean_gdp_capita = mean(gdp_capita, na.rm = TRUE),
+            mean_life_ex = mean(life_ex, na.rm = TRUE))
+
+model <- lm(data = graph_data, mean_life_ex ~ mean_gdp_capita)
+summary(model)
+```
+
