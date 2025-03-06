@@ -25,7 +25,8 @@ library(dplyr)
 gdp_cap = read.csv("./gdp_pcap.csv")
 lex = read.csv("./lex.csv")
 ```
-The GDP data set represents the countries overall Gross Domestic Product, in Internation Dollars, divided by the country's population. The life expectancy data set represents the expected years a baby born in that year and country, would live. 
+
+The GDP data set represents the countries overall Gross Domestic Product, in Internation Dollars, divided by the country's population. The life expectancy data set represents the expected years a baby born in that year and country, would live.
 
 ## Data Cleaning
 
@@ -53,6 +54,7 @@ gdp_clean <- gdp_cap |>
 The data for GDP per capita contained "k" as a representation of thousands of dollars. In order to make this easier to work with, we converted all data points in this set to doubles.
 
 ### Pivoting Data
+
 ```{r}
 gdp_cap_long <- gdp_clean |>
   pivot_longer(cols = "X1800":"X2020",
@@ -68,8 +70,9 @@ lex_long <- lex |>
 ```
 
 Here, we pivoted both data sets into a long format, so that each row represents a specific year, for a country, and their life expectancy or GDP per capita.
-  
+
 ### Remove X's
+
 ```{r}
 gdp_cap_long <- gdp_cap_long |>
   mutate(year = as.integer(str_remove(year, pattern = "X")))
@@ -82,6 +85,7 @@ lex_long <- lex_long |>
 When we read the data into quarto, the column names all contained X at the beginning of each year. Since we pivoted those into observations, we decided to remove those to make the years more clean.
 
 ### Join GDP and Life Expectancy
+
 ```{r}
 data <- gdp_cap_long |> 
   full_join(lex_long, by = c("country", "year"))
@@ -91,6 +95,7 @@ data
 Here we joined the data together into one frame with a column for year, country, GDP per capita, and life expectancy. Based on brief analysis of the data, we hypothesize that as GDP per capita increase, the life expectancy will also increase.
 
 ### Combining Data and Modelling
+
 ```{r}
 graph_data <- data |>
   group_by(year) |>
@@ -104,10 +109,26 @@ table <- as.data.frame(summary(model)$coefficients)
 table2 <- summary(graph_data$mean_gdp_capita, 
                   graph_data$mean_life_ex)
 
+var_response <- var(graph_data$mean_gdp_capita)
+var_fitted <- var(fitted(model))
+var_residuals <- var(residuals(model))
+
+table3 <- tibble(
+  "Response Variance" = var_response,
+  "Fitted Value Variance" = var_fitted,
+  "Residual Variance" = var_residuals
+)
 
 
-table2
+
+table3
+
+var_fitted / var_response
 ```
+
+Discuss the proportion of the variability in the response values that was accounted for by your regression model. What does this suggest about the “quality” of your model?
+
+Our R\^2 value of 0.8922 indicates that in our regression model, 89.22% of the variation in our response (GDP per capita) was accounted for...
 
 ```{r}
 ggplot(data = graph_data,
@@ -117,6 +138,7 @@ ggplot(data = graph_data,
   geom_smooth(method = "lm")
 
 ```
+
 The results we got here for our Beta 1 coefficient was
 
 ```{r}
