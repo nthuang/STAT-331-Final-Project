@@ -118,3 +118,25 @@ ggplot(data = graph_data,
 
 ```
 The results we got here for our Beta 1 coefficient was
+
+```{r}
+predicted <- predict(model)
+se <- sigma(model)
+
+simulated <- predicted + rnorm(length(predicted), mean = 0, sd = se)
+
+graph_data <- graph_data |>
+  mutate(simulated = simulated)
+
+(
+  ggplot(data = graph_data, mapping = aes(x=mean_life_ex, y=mean_gdp_capita)) + 
+    geom_point() +
+    geom_smooth(method="lm")
+)
+
+(
+  ggplot(data = graph_data, mapping = aes(x=mean_life_ex, y=simulated)) + 
+    geom_point() +
+    geom_smooth(method="lm")
+)
+```
