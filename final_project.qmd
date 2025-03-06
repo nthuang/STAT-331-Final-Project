@@ -100,12 +100,21 @@ graph_data <- data |>
 model <- lm(data = graph_data, mean_gdp_capita ~ mean_life_ex)
 summary(model)
 
+table <- as.data.frame(summary(model)$coefficients)
+table2 <- summary(graph_data$mean_gdp_capita, 
+                  graph_data$mean_life_ex)
+
+
+
+table2
+```
+
+```{r}
 ggplot(data = graph_data,
        mapping = aes(x = mean_life_ex,
                      y = mean_gdp_capita)) +
   geom_point() +
   geom_smooth(method = "lm")
 
-
 ```
-The results we got here for our Beta 1 coefficient was 2.39
+The results we got here for our Beta 1 coefficient was
