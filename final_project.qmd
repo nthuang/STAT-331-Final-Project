@@ -94,6 +94,35 @@ data
 
 Here we joined the data together into one frame with a column for year, country, GDP per capita, and life expectancy. Based on brief analysis of the data, we hypothesize that as GDP per capita increase, the life expectancy will also increase.
 
+# Linear Regression
+
+## Data Visualization
+
+Creating a plot between GDP per Capita and Life Expectancy over time
+
+```{r}
+
+library(ggplot2)
+library(gganimate)
+library(gifski)
+
+plot <- ggplot(data = data,
+               mapping = aes(x = gdp_capita,
+                             y = life_ex,
+                             color = country)) +
+  geom_point(show.legend = FALSE,
+             alpha = 0.5,
+             size = 5) +
+  theme_bw() +
+  transition_time(year) +
+  labs(title = "Life Expectancy (Years) vs. GDP per Capita in Year: {frame_time}",
+       y = "",
+       x = "GDP Per Capita (International $)")
+
+animate(plot, duration =10, fps = 30, renderer = gifski_renderer())
+
+```
+
 ### Combining Data and Modelling
 
 ```{r}
@@ -105,15 +134,7 @@ graph_data <- data |>
 model <- lm(data = graph_data, mean_gdp_capita ~ mean_life_ex)
 summary(model)
 
-table <- as.data.frame(summary(model)$coefficients)
-table2 <- summary(graph_data$mean_gdp_capita, 
-                  graph_data$mean_life_ex)
-
-var_response <- var(graph_data$mean_gdp_capita)
-var_fitted <- var(fitted(model))
-var_residuals <- var(residuals(model))
-
-table3 <- tibble(
+table <- tibble(
   "Response Variance" = var_response,
   "Fitted Value Variance" = var_fitted,
   "Residual Variance" = var_residuals
@@ -121,14 +142,12 @@ table3 <- tibble(
 
 
 
-table3
+table
 
 var_fitted / var_response
 ```
 
-Discuss the proportion of the variability in the response values that was accounted for by your regression model. What does this suggest about the “quality” of your model?
-
-Our R\^2 value of 0.8922 indicates that in our regression model, 89.22% of the variation in our response (GDP per capita) was accounted for...
+Our R\^2 value of `r var_fitted / var_response` indicates that our regression model accounts for 89.22% of the variation in our response (GDP per capita). Because this value is high, this suggests that we have a high quality model.
 
 ```{r}
 ggplot(data = graph_data,
