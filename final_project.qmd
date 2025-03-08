@@ -101,6 +101,8 @@ Here we joined the data together into one frame with a column for year, country,
 Creating a plot between GDP per Capita and Life Expectancy over time
 
 ```{r}
+#| warning: false
+#| message: false
 
 library(ggplot2)
 library(gganimate)
@@ -123,33 +125,16 @@ animate(plot, duration =10, fps = 30, renderer = gifski_renderer())
 
 ```
 
-### Combining Data and Modelling
+Relationship between GDP per Capita and Life Expectancy averaged over years for each country
 
 ```{r}
+#| message: false
+
 graph_data <- data |>
   group_by(year) |>
   summarize(mean_gdp_capita = mean(gdp_capita, na.rm = TRUE),
             mean_life_ex = mean(life_ex, na.rm = TRUE))
 
-model <- lm(data = graph_data, mean_gdp_capita ~ mean_life_ex)
-summary(model)
-
-table <- tibble(
-  "Response Variance" = var_response,
-  "Fitted Value Variance" = var_fitted,
-  "Residual Variance" = var_residuals
-)
-
-
-
-table
-
-var_fitted / var_response
-```
-
-Our R\^2 value of `r var_fitted / var_response` indicates that our regression model accounts for 89.22% of the variation in our response (GDP per capita). Because this value is high, this suggests that we have a high quality model.
-
-```{r}
 ggplot(data = graph_data,
        mapping = aes(x = mean_life_ex,
                      y = mean_gdp_capita)) +
@@ -157,6 +142,43 @@ ggplot(data = graph_data,
   geom_smooth(method = "lm")
 
 ```
+
+### Linear Regression
+
+Below is our fitted regression model between Mean GDP per Capita (response) and Mean Life Expectancy (explanatory).
+
+```{r}
+
+model <- lm(data = graph_data, mean_gdp_capita ~ mean_life_ex)
+summary(model)
+
+```
+
+In the coefficient section, the intercept indicates that for a country to have a life expectancy of 0 years, its GDP per capita would be approximately -11220 international dollars. The estimated slope of 373.173 indicates that as life expectancy of a country increases by 1 year, GDP per capita of the same country increases by 373.173 international dollars on average.
+
+## Model Fit
+
+```{r}
+
+var_response <- var(graph_data$mean_gdp_capita)
+var <- var(fitted(model))
+var_residuals <- var(residuals(model))
+
+table <- tibble(
+  "Response Variance" = var_response,
+  "Fitted Value Variance" = var_fitted,
+  "Residual Variance" = var_residuals
+)
+
+table
+
+var_fitted / var_response
+
+```
+
+Our R\^2 value of `r var_fitted / var_response` indicates that our regression model accounts for 89.22% of the variation in our response (GDP per capita). Because this value is high, this suggests that we have a high quality model.
+
+# Simulation
 
 The results we got here for our Beta 1 coefficient was
 
