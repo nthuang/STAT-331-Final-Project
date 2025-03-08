@@ -161,7 +161,7 @@ In the coefficient section, the intercept indicates that for a country to have a
 ```{r}
 
 var_response <- var(graph_data$mean_gdp_capita)
-var <- var(fitted(model))
+var_fitted <- var(fitted(model))
 var_residuals <- var(residuals(model))
 
 table <- tibble(
