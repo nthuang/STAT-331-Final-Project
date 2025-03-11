@@ -225,11 +225,17 @@ r_squared <- function(sim){
 
 r_squared_table <- map(.x = results,
                        .f = ~ r_squared(.x))
+
+r_sq_vector <- unlist(r_squared_table)
 ```
 
 Plot the distribution of R\^2 values from the regressions
 
 ```{r}
-ggplot(data = r_squared_table,
-       aes(x = r_squared_table))
+rsq <- data.frame(r_sq = r_sq_vector)
+
+ggplot(data = rsq,
+       aes(x = r_sq)) +
+  geom_histogram()
+  
 ```
