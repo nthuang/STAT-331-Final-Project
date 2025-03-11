@@ -196,13 +196,19 @@ graph_data <- graph_data |>
 (
   ggplot(data = graph_data, mapping = aes(x=mean_life_ex, y=mean_gdp_capita)) + 
     geom_point() +
-    geom_smooth(method="lm")
+    geom_smooth(method="lm") +
+    labs(title = "Simulated Data",
+         x = "Mean Life Expectancy",
+         y = "Observed Mean GDP Per Capita")
 )
 
 (
   ggplot(data = graph_data, mapping = aes(x=mean_life_ex, y=simulated)) + 
     geom_point() +
-    geom_smooth(method="lm")
+    geom_smooth(method="lm") + 
+    labs(title = "Simulated Data",
+         x = "Mean Life Expectancy",
+         y = "Simulated Mean GDP Per Capita")
 )
 ```
 
