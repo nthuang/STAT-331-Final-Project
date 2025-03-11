@@ -19,6 +19,8 @@ message: false
 ```{r}
 library(tidyverse)
 library(dplyr)
+
+set.seed(2000)
 ```
 
 ```{r}
