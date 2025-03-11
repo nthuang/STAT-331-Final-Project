@@ -12,6 +12,7 @@ execute:
   echo: true
 warning: false
 message: false
+df-print: kable
 ---
 
 ## Data
@@ -91,7 +92,7 @@ When we read the data into quarto, the column names all contained X at the begin
 ```{r}
 data <- gdp_cap_long |> 
   full_join(lex_long, by = c("country", "year"))
-data
+head(data, 10)
 ```
 
 Here we joined the data together into one frame with a column for year, country, GDP per capita, and life expectancy. Based on brief analysis of the data, we hypothesize that as GDP per capita increase, the life expectancy will also increase.
@@ -244,10 +245,13 @@ rsq <- data.frame(r_sq = r_sq_vector)
 
 ggplot(data = rsq,
        aes(x = r_sq)) +
-  geom_histogram()
+  geom_histogram() + 
+  labs(title = "Distribution of Simulated R^2 Values",
+       y = "Frequency",
+       x = "R^2 Value")
   
 ```
 
 # Conclusion
-The mean of the R-squared values regressing our observed response values on simulated response values is around 0.80. This is a moderately high R-squared value and implies that the linear model was a relatively good fit for the actual relationship between the two variables. Due to the high R-squared value, the simulated model generates data very similar to our observed response values. 
 
+The mean of the R-squared values regressing our observed response values on simulated response values is around 0.80. This is a moderately high R-squared value and implies that the linear model was a relatively good fit for the actual relationship between the two variables. Due to the high R-squared value, the simulated model generates data very similar to our observed response values.
