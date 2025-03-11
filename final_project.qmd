@@ -231,7 +231,7 @@ r_squared_table <- map(.x = results,
 r_sq_vector <- unlist(r_squared_table)
 ```
 
-Plot the distribution of R\^2 values from the regressions
+### Plot the distribution of R\^2 values from the regressions
 
 ```{r}
 rsq <- data.frame(r_sq = r_sq_vector)
@@ -241,3 +241,7 @@ ggplot(data = rsq,
   geom_histogram()
   
 ```
+
+# Conclusion
+The mean of the R-squared values regressing our observed response values on simulated response values is around 0.80. This is a moderately high R-squared value and implies that the linear model was a relatively good fit for the actual relationship between the two variables. Due to the high R-squared value, the simulated model generates data very similar to our observed response values. 
+
