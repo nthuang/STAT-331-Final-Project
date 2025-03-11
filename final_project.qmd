@@ -212,6 +212,7 @@ graph_data <- graph_data |>
          y = "Simulated Mean GDP Per Capita")
 )
 ```
+The observed data is different simulated because for simulated values, their errors are more evenly spread above and below the line for similar life expectancy values. Whereas in the observed data, because we used averages from each year, the errors are more similar for each life expectancy value. 
 
 ## Generating Multiple Predictive Checks
 
