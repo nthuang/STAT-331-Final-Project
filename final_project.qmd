@@ -205,3 +205,25 @@ graph_data <- graph_data |>
 ```
 
 ## Generating Multiple Predictive Checks
+
+```{r}
+generate_data <- function(model){
+  predicted <- predict(model)
+  se <- sigma(model)
+  simulated <- predicted + rnorm(length(predicted), mean = 0, sd = se)
+  return(simulated)
+}
+  
+results <- map(.x = 1:1000,
+               .f = ~ generate_data(model)
+               )
+
+r_squared <- function(sim){
+  reg <- lm(graph_data$mean_gdp_capita ~ sim)
+  return((summary(reg))$r.squared)
+}
+
+r_squared_table <- map(.x = results,
+                       .f = ~ r_squared)
+```
+
