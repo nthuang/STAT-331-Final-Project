@@ -101,8 +101,8 @@ Here we joined the data together into one frame with a column for year, country,
 Creating a plot between GDP per Capita and Life Expectancy over time
 
 ```{r}
-#| warning: false
 #| message: false
+#| warning: false
 
 library(ggplot2)
 library(gganimate)
@@ -180,7 +180,7 @@ Our R\^2 value of `r var_fitted / var_response` indicates that our regression mo
 
 # Simulation
 
-The results we got here for our Beta 1 coefficient was
+## Visualizing Simulations from the Model
 
 ```{r}
 predicted <- predict(model)
@@ -203,3 +203,5 @@ graph_data <- graph_data |>
     geom_smooth(method="lm")
 )
 ```
+
+## Generating Multiple Predictive Checks
