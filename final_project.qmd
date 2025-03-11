@@ -224,6 +224,6 @@ r_squared <- function(sim){
 }
 
 r_squared_table <- map(.x = results,
-                       .f = ~ r_squared)
+                       .f = ~ r_squared(.x))
 ```
 
