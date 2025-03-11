@@ -227,3 +227,9 @@ r_squared_table <- map(.x = results,
                        .f = ~ r_squared(.x))
 ```
 
+Plot the distribution of R\^2 values from the regressions
+
+```{r}
+ggplot(data = r_squared_table,
+       aes(x = r_squared_table))
+```
